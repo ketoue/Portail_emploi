@@ -1,0 +1,30 @@
+[Prénom et Nom du Recruteur]
+[Poste du Recruteur]
+[Nom de l'Entreprise]
+[Adresse de l'Entreprise]
+[Ville, Code Postal]
+
+Montréal, le [Date]
+
+Objet : Candidature au poste de spécialiste marketing chez Meta
+
+Madame, Monsieur,
+
+Je m'appelle Jean Dupont et je suis actuellement Ingénieur logiciel chez Google à Montréal. Fort de plus de 5 ans d'expérience dans le développement de logiciels performants et évolutifs, je vous écris aujourd'hui pour manifester mon vif intérêt pour le poste de spécialiste marketing chez Meta, tel que publié sur [Préciser la source de l'annonce].
+
+Mon expertise technique en Python, Java, et C++, ainsi que ma spécialisation dans le développement d'applications cloud sur les plateformes AWS et GCP, m'offre une solide base pour m'attaquer aux défis du marketing en ligne et hors ligne. Mon expérience en tant que Software Engineer chez Google m'a permis de collaborer avec des équipes internationales pour concevoir des solutions logicielles performantes et sécurisées, ce qui serait un atout précieux pour travailler en étroite collaboration avec les équipes créatives et techniques chez Meta.
+
+Je possède une solide capacité analytique, démontrée par mon travail d'optimisation des services cloud pour réduire les coûts d'exploitation de 15% chez Google. De plus, mes compétences en gestion de projets, acquises lors de ma Maîtrise en informatique à l'Université de Montréal, me permettent de planifier et exécuter des campagnes publicitaires de manière efficace et efficiente.
+
+En tant que passionné de technologie et d'innovation, je suis convaincu que mon bagage technique et mes compétences en résolution de problèmes complexes me permettront de relever avec succès les défis du poste de spécialiste marketing chez Meta.
+
+Je serais ravi de discuter plus en détail de ma candidature lors d'un entretien. Vous trouverez ci-joint mon curriculum vitae détaillé pour de plus amples informations sur mon parcours professionnel.
+
+Je vous remercie vivement de l'attention portée à ma candidature. Dans l'attente d'une réponse favorable de votre part, veuillez recevoir, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+Cordialement,
+
+Jean Dupont
++1 (514) 555-1234
+jeandupont@example.com
+linkedin.com/in/jeandupont

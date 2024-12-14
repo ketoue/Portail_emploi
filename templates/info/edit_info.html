@@ -1,0 +1,125 @@
+{% extends 'base.html' %} {% load widget_tweaks %} {% block content %}
+
+<style>
+  body {
+    background-color: #f4f6f9;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Conteneur principal pour centrer le formulaire */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+    padding: 20px;
+  }
+
+  /* Style pour la carte du formulaire */
+  .card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  /* Titre du formulaire */
+  .card-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* Champs de formulaire */
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 12px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+
+  /* Responsivité */
+  @media screen and (max-width: 768px) {
+    .card {
+      padding: 20px;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mx-auto" style="width: 40rem">
+      <div class="card-body">
+        <h4 class="card-title mb-3">Add Info</h4>
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="exampleInputEmail" class="form-label">First Name</label>
+            {% render_field form.first_name class="form-control"%}
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail" class="form-label">Surname</label>
+            {% render_field form.surname class="form-control"%}
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail" class="form-label">Location</label>
+            {% render_field form.location class="form-control"%}
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail" class="form-label">Job Title</label>
+            {% render_field form.job_title class="form-control"%}
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail" class="form-label">Skills</label>
+            {% render_field form.skills class="form-control"%}
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail" class="form-label">Upload CV</label>
+            {% render_field form.upload_cv class="form-control"%}
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail" class="form-label"
+              >Cover Letter</label
+            >
+            {% render_field form.cover_letter class="form-control"%}
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

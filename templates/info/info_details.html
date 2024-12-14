@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% load humanize %} {%block content%}
+
+<style>
+  /* Style global pour le fond */
+  body {
+    background-color: #f5f7fa;
+    font-family: "Arial", sans-serif;
+  }
+
+  /* Titre principal */
+  h2.text-center {
+    color: #007bff;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Style des cartes */
+  .card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* En-têtes des sections */
+  .card-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 1rem;
+  }
+
+  /* Texte des informations */
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #495057;
+  }
+
+  /* Lien pour télécharger les documents */
+  a.btn-link {
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  a.btn-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+  /* Alignement des sections */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* Bordure séparatrice */
+  hr {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 1.5rem 0;
+  }
+
+  /* Section vide ou valeur manquante */
+  p.text-muted {
+    color: #6c757d;
+    font-style: italic;
+  }
+
+  /* Documents non disponibles */
+  .not-uploaded {
+    color: #dc3545;
+    font-weight: bold;
+  }
+</style>
+
+<div class="container py-5">
+  <h2 class="text-center text-primary">Applicant Details</h2>
+  <div class="card my-4">
+    <div class="card-body">
+      <h4 class="card-title">Personal Information</h4>
+      <p><strong>First Name:</strong> {{ info.first_name }}</p>
+      <p><strong>Surname:</strong> {{ info.surname }}</p>
+      <p><strong>Location:</strong> {{ info.location }}</p>
+      <p><strong>Job Title:</strong> {{ info.job_title }}</p>
+      <p><strong>Skills:</strong> {{ info.skills }}</p>
+    </div>
+  </div>
+  <div class="card my-4">
+    <div class="card-body">
+      <h4 class="card-title">Documents</h4>
+      <p>
+        <strong>Resume:</strong>
+        {% if info.upload_cv %}
+        <a href="{{ info.upload_cv.url }}" class="btn btn-link"
+          >Download Resume</a
+        >
+        {% else %} Not uploaded {% endif %}
+      </p>
+      <p>
+        <strong>Cover Letter:</strong>
+        {% if info.cover_letter %}
+        <a href="{{ info.cover_letter.url }}" class="btn btn-link"
+          >Download Cover Letter</a
+        >
+        {% else %} Not uploaded {% endif %}
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

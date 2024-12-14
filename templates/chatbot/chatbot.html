@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {%extends 'base.html'%} {%block content%}
+    <title>{% block title %}Default Title{% endblock title %}</title>
+    <title>Chatbot KetAb</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #333;
+      color: #fff;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #sidebar button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #sidebar button:hover {
+      background-color: #0056b3;
+    }
+
+    #main {
+      margin-left: 220px;
+      width: calc(100% - 220px);
+      padding: 20px;
+    }
+
+    #chat-box {
+      width: 90%;
+      height: 85vh; /* Prend 85% de la hauteur de l'écran */
+      overflow-y: auto; /* Permet le défilement */
+      padding: 15px;
+      background-color: #f4f4f9; /* Même couleur que le fond */
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border: none; /* Supprime la bordure si nécessaire */
+    }
+
+    #chat-box p {
+      margin: 5px 0;
+    }
+
+    #chat-box p strong {
+      color: #007bff;
+    }
+
+    #user-input {
+      width: 75%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #chat-box {
+      width: 90%;
+      height: 85vh; /* Hauteur pour occuper la majorité de l'écran */
+      overflow-y: auto; /* Ajout du défilement si nécessaire */
+      padding: 15px;
+      background-color: #f4f4f9; /* Même couleur que le fond */
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    #chat-box p:nth-child(odd) {
+      align-self: flex-end; /* Aligne vos messages à droite */
+      background-color: #cce5ff; /* Couleur de fond bleu clair */
+      color: #004085; /* Texte bleu foncé */
+      padding: 10px;
+      border-radius: 15px;
+      max-width: 70%;
+      word-wrap: break-word;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre douce */
+    }
+
+    #chat-box p:nth-child(even) {
+      align-self: flex-start; /* Aligne les messages du bot à gauche */
+      background-color: #d4edda; /* Couleur de fond vert clair */
+      color: #155724; /* Texte vert foncé */
+      padding: 10px;
+      border-radius: 15px;
+      max-width: 70%;
+      word-wrap: break-word;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre douce */
+    }
+  </style>
+
+  <body>
+    <div id="sidebar">
+      <h2>Chats</h2>
+      <button onclick="newChat()">Nouveau Chat</button>
+      <div id="chat-list"></div>
+    </div>
+
+    <div id="main">
+      <a
+        href="{% url 'home' %}"
+        style="text-decoration: none; color: #007bff; font-size: 18px"
+        >←
+      </a>
+      <h1>Chatbot KetAb</h1>
+
+      <div id="chat-box"></div>
+      <div>
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Tapez votre message ici..."
+        />
+        <button onclick="sendMessage()">Envoyer</button>
+      </div>
+    </div>
+
+    <script>
+      const apiKey ="{{api_key}}"
+      let chats = []; // List of chats
+      let currentChat = { messages: [], id: Date.now() }; // actif chat
+
+      function updateChatList() {
+        const chatList = document.getElementById("chat-list");
+        chatList.innerHTML = "";
+        chats.forEach((chat, index) => {
+          const chatButton = document.createElement("button");
+          chatButton.textContent = `Chat ${index + 1}`;
+          chatButton.onclick = () => loadChat(index);
+          chatList.appendChild(chatButton);
+        });
+      }
+
+      // new chat
+      function newChat() {
+        if (currentChat.messages.length > 0) {
+          chats.push(currentChat);
+        }
+        currentChat = { messages: [], id: Date.now() };
+        document.getElementById("chat-box").innerHTML = "";
+        updateChatList();
+      }
+
+      // charge exite chat
+      function loadChat(index) {
+        currentChat = chats[index];
+        const chatBox = document.getElementById("chat-box");
+        chatBox.innerHTML = "";
+        currentChat.messages.forEach((message) => {
+          chatBox.innerHTML += `<p><strong>${
+            message.role === "user" ? "Vous" : "Bot"
+          } :</strong> ${message.content}</p>`;
+        });
+      }
+
+      async function sendMessage() {
+        const userInput = document.getElementById("user-input").value.trim();
+        const chatBox = document.getElementById("chat-box");
+
+        if (userInput === "") {
+          alert("Veuillez entrer un message.");
+          return;
+        }
+
+        chatBox.innerHTML += `<p><strong>Vous :</strong> ${userInput}</p>`;
+        document.getElementById("user-input").value = "";
+
+        currentChat.messages.push({ role: "user", content: userInput });
+
+        try {
+          const response = await fetch(
+            "https://api.openai.com/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`,
+              },
+              body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: currentChat.messages,
+                temperature: 0.7,
+                max_tokens: 100,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Erreur API : ${response.status}`);
+          }
+
+          const data = await response.json();
+          const assistantReply = data.choices[0].message.content;
+
+          chatBox.innerHTML += `<p><strong>Bot :</strong> ${assistantReply}</p>`;
+          currentChat.messages.push({
+            role: "assistant",
+            content: assistantReply,
+          });
+          chatBox.scrollTop = chatBox.scrollHeight;
+        } catch (error) {
+          console.error("Erreur lors de l'appel à l'API OpenAI :", error);
+          chatBox.innerHTML += `<p style="color:red;"><strong>Erreur :</strong> Impossible d'obtenir une réponse.</p>`;
+        }
+      }
+    </script>
+  </body>
+</html>
+{%endblock content%}
